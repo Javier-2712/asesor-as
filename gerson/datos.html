@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ES-es" xml:lang="ES-es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Javier Rodríguez-Barrios">
+<meta name="dcterms.date" content="2024-10-08">
+<meta name="description" content="Se realiza un modelo de regresión lineal, que tiene como objetivo explicar cómo las distintas variables predictoras (cuantitativas y categóricas) influyen en los gastos de las personas. Cada variable tiene un coeficiente que mide su efecto promedio sobre los GASTOS.">
+
+<title>Asesoría. Modelo de Regresión</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="datos_files/libs/clipboard/clipboard.min.js"></script>
+<script src="datos_files/libs/quarto-html/quarto.js"></script>
+<script src="datos_files/libs/quarto-html/popper.min.js"></script>
+<script src="datos_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="datos_files/libs/quarto-html/anchor.min.js"></script>
+<link href="datos_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="datos_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="datos_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="datos_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="datos_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<style>
+    .quarto-title-block .quarto-title-banner {
+      background: #2b8cbe;
+    }
+    </style>
+
+
+<link rel="stylesheet" href="stile-justify.css">
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Asesoría. Modelo de Regresión</h1>
+            <p class="subtitle lead">Análisis de regresión lineal para Gerson</p>
+                  <div>
+        <div class="description">
+          Se realiza un modelo de regresión lineal, que tiene como objetivo explicar cómo las distintas variables predictoras (cuantitativas y categóricas) influyen en los gastos de las personas. Cada variable tiene un coeficiente que mide su efecto promedio sobre los GASTOS.
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Autor/a</div>
+      <div class="quarto-title-meta-contents">
+               <p>Javier Rodríguez-Barrios </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Fecha de publicación</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 8, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Menú flotante</h2>
+   
+  <ul>
+  <li><a href="#interpretación-general" id="toc-interpretación-general" class="nav-link active" data-scroll-target="#interpretación-general">1. <strong>Interpretación general</strong></a>
+  <ul>
+  <li><a href="#coeficientes" id="toc-coeficientes" class="nav-link" data-scroll-target="#coeficientes"><strong>Coeficientes</strong> :</a></li>
+  <li><a href="#error-estándar" id="toc-error-estándar" class="nav-link" data-scroll-target="#error-estándar"><strong>Error estándar</strong> :</a></li>
+  <li><a href="#valores-p-prt" id="toc-valores-p-prt" class="nav-link" data-scroll-target="#valores-p-prt"><strong>Valores p (Pr(&gt;|t|))</strong> :</a></li>
+  <li><a href="#r-cuadrado-r²" id="toc-r-cuadrado-r²" class="nav-link" data-scroll-target="#r-cuadrado-r²"><strong>R-cuadrado (R²)</strong> :</a></li>
+  <li><a href="#f-estadístico-y-su-valor-p" id="toc-f-estadístico-y-su-valor-p" class="nav-link" data-scroll-target="#f-estadístico-y-su-valor-p"><strong>F-Estadístico y su valor p</strong> :</a></li>
+  </ul></li>
+  <li><a href="#figura-del-modelo-de-regresión-realizado" id="toc-figura-del-modelo-de-regresión-realizado" class="nav-link" data-scroll-target="#figura-del-modelo-de-regresión-realizado">Figura del modelo de regresión realizado</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar las librerías necesarias</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar los datos</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos.xlsx"</span>, <span class="st">"DATOS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir las variables categóricas a factores</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>GENERO <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>GENERO)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>ESTADO_CIVIL <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>ESTADO_CIVIL)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>NIVEL_EDUCATIVO <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>NIVEL_EDUCATIVO)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>VIVIENDA <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>VIVIENDA)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>CALIFICACION_SERVIVCIO_TRANSPORTE <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>CALIFICACION_SERVIVCIO_TRANSPORTE)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear el modelo de regresión con variables dummy</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(GASTOS <span class="sc">~</span> EDAD <span class="sc">+</span> INGRESO <span class="sc">+</span> TIEMPO_RECORRIDO <span class="sc">+</span> GASTO_DIARIO_TRANSPORTE <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>             PERSONAS_HOGAR <span class="sc">+</span> PERSONAS_EDAD_TRABAJAR <span class="sc">+</span> NUMERO_PERSONAS_EDAD_TRABAJAR <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>             GENERO <span class="sc">+</span> ESTADO_CIVIL <span class="sc">+</span> NIVEL_EDUCATIVO <span class="sc">+</span> VIVIENDA <span class="sc">+</span> CALIFICACION_SERVIVCIO_TRANSPORTE, </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> datos)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Resumen del modelo</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = GASTOS ~ EDAD + INGRESO + TIEMPO_RECORRIDO + GASTO_DIARIO_TRANSPORTE + 
+    PERSONAS_HOGAR + PERSONAS_EDAD_TRABAJAR + NUMERO_PERSONAS_EDAD_TRABAJAR + 
+    GENERO + ESTADO_CIVIL + NIVEL_EDUCATIVO + VIVIENDA + CALIFICACION_SERVIVCIO_TRANSPORTE, 
+    data = datos)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-830.7 -136.6   -3.5  115.3  503.5 
+
+Coefficients:
+                                             Estimate Std. Error t value
+(Intercept)                                -600.77777  275.17436  -2.183
+EDAD                                         14.03937    4.18215   3.357
+INGRESO                                       0.88277    0.04665  18.923
+TIEMPO_RECORRIDO                              4.89765    3.40949   1.436
+GASTO_DIARIO_TRANSPORTE                       3.59583    1.46659   2.452
+PERSONAS_HOGAR                              -33.94802   48.08591  -0.706
+PERSONAS_EDAD_TRABAJAR                       44.65104   61.35354   0.728
+NUMERO_PERSONAS_EDAD_TRABAJAR               -26.96695   69.71457  -0.387
+GENEROMUJER                                  54.35439   98.47960   0.552
+ESTADO_CIVILDIVORCIADO                     -438.23220  165.13187  -2.654
+ESTADO_CIVILOTRO                           -278.54499  128.71363  -2.164
+ESTADO_CIVILSOLTERO                         243.82694  132.89044   1.835
+NIVEL_EDUCATIVOPOSTGRADO                   -352.77670  165.41520  -2.133
+NIVEL_EDUCATIVOPRIMARIA                    -101.40049  117.65459  -0.862
+NIVEL_EDUCATIVOTECNICO                       -2.94376  136.16047  -0.022
+NIVEL_EDUCATIVOUNIVERSITARIO                -87.64773  130.20051  -0.673
+VIVIENDASI                                 -133.66388   82.02190  -1.630
+CALIFICACION_SERVIVCIO_TRANSPORTEEXCELENTE   48.09456  148.17859   0.325
+CALIFICACION_SERVIVCIO_TRANSPORTEMALO       108.44407  164.89105   0.658
+CALIFICACION_SERVIVCIO_TRANSPORTEMUY_BUENO  213.13077  178.05910   1.197
+CALIFICACION_SERVIVCIO_TRANSPORTEREGULAR    181.19854  159.06382   1.139
+                                           Pr(&gt;|t|)    
+(Intercept)                                 0.03252 *  
+EDAD                                        0.00130 ** 
+INGRESO                                     &lt; 2e-16 ***
+TIEMPO_RECORRIDO                            0.15552    
+GASTO_DIARIO_TRANSPORTE                     0.01683 *  
+PERSONAS_HOGAR                              0.48264    
+PERSONAS_EDAD_TRABAJAR                      0.46929    
+NUMERO_PERSONAS_EDAD_TRABAJAR               0.70012    
+GENEROMUJER                                 0.58283    
+ESTADO_CIVILDIVORCIADO                      0.00993 ** 
+ESTADO_CIVILOTRO                            0.03403 *  
+ESTADO_CIVILSOLTERO                         0.07098 .  
+NIVEL_EDUCATIVOPOSTGRADO                    0.03662 *  
+NIVEL_EDUCATIVOPRIMARIA                     0.39184    
+NIVEL_EDUCATIVOTECNICO                      0.98282    
+NIVEL_EDUCATIVOUNIVERSITARIO                0.50315    
+VIVIENDASI                                  0.10788    
+CALIFICACION_SERVIVCIO_TRANSPORTEEXCELENTE  0.74652    
+CALIFICACION_SERVIVCIO_TRANSPORTEMALO       0.51300    
+CALIFICACION_SERVIVCIO_TRANSPORTEMUY_BUENO  0.23554    
+CALIFICACION_SERVIVCIO_TRANSPORTEREGULAR    0.25869    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 262.7 on 67 degrees of freedom
+Multiple R-squared:  0.9579,    Adjusted R-squared:  0.9454 
+F-statistic: 76.26 on 20 and 67 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<section id="interpretación-general" class="level3">
+<h3 class="anchored" data-anchor-id="interpretación-general">1. <strong>Interpretación general</strong></h3>
+<p>El modelo de regresión lineal tiene como objetivo explicar cómo las distintas variables predictoras (cuantitativas y categóricas) influyen en los gastos de las personas. Cada variable tiene un coeficiente que mide su efecto promedio sobre los <em>GASTOS</em> .</p>
+<section id="coeficientes" class="level4">
+<h4 class="anchored" data-anchor-id="coeficientes"><strong>Coeficientes</strong> :</h4>
+<ul>
+<li><p>Cada variable predictora o causal (variable x), ya sea cuantitativa o categórica, tiene un coeficiente que refleja su relación con los <em>GASTOS</em>.</p></li>
+<li><p>El coeficiente de una variable cuantitativa indica cuánto cambian los <em>GASTOS</em> en promedio por cada unidad adicional de esa variable, manteniendo las demás constantes. <em>Ejemplo</em>: Si el coeficiente de <code>INGRESO</code> es 0.5, significa que, por cada unidad adicional de ingreso, los <em>GASTOS</em> aumentan en promedio en 0.5 unidades.</p></li>
+</ul>
+</section>
+<section id="error-estándar" class="level4">
+<h4 class="anchored" data-anchor-id="error-estándar"><strong>Error estándar</strong> :</h4>
+<ul>
+<li>Indica la precisión de los coeficientes. Un error estándar pequeño significa que la estimación del coeficiente es más precisa. Los valores altos indican que los coeficientes pueden no ser confiables.</li>
+</ul>
+</section>
+<section id="valores-p-prt" class="level4">
+<h4 class="anchored" data-anchor-id="valores-p-prt"><strong>Valores p (Pr(&gt;|t|))</strong> :</h4>
+<ul>
+<li><p>Determinan la significancia estadística de las variables en el modelo. En general, si el <strong>valor p</strong> de una variable es menor a 0.05, se considera que esa variable tiene un impacto estadísticamente significativo sobre los <em><code>GASTOS</code></em> .</p></li>
+<li><p>Si una variable tiene un valor p alto (mayor que 0.05), significa que no se puede afirmar con suficiente confianza que tiene un impacto significativo en los <em><code>GASTOS</code></em> .</p></li>
+</ul>
+</section>
+<section id="r-cuadrado-r²" class="level4">
+<h4 class="anchored" data-anchor-id="r-cuadrado-r²"><strong>R-cuadrado (R²)</strong> :</h4>
+<ul>
+<li>El R-cuadrado indica la proporción de la variabilidad en los <em>GASTOS</em> que está explicada por las variables predictoras del modelo. Un valor cercano a 1 implica que el modelo explica la mayor parte de la variabilidad en los gastos. Un valor bajo indica que aún queda mucha variabilidad sin explicar. En resumen, <strong>R²</strong> mide el nivel de relación lineal de las variables asociadas a los <em>GASTOS.</em></li>
+</ul>
+</section>
+<section id="f-estadístico-y-su-valor-p" class="level4">
+<h4 class="anchored" data-anchor-id="f-estadístico-y-su-valor-p"><strong>F-Estadístico y su valor p</strong> :</h4>
+<ul>
+<li>El F-estadístico evalúa la importancia global del modelo. Si el valor p asociado es menor a 0.05, el modelo en su conjunto es significativo.</li>
+</ul>
+<p><strong>Resultado del modelo:</strong></p>
+<p>Las variables con un efecto significativo en los gastos son: La edad, Los ingresos, Gasto diario de transporte, Estado civil divorciado y otro (el de soltero se acerca), nivel educativo de posgrado. Estas variables tienen un valor-p menos a 0,05, por eso se les coloca un asterísco que identifica su significancia para el modelo de gastos. En este sentido un modelo lineal pare este caso podría ser:</p>
+<p><strong><code>GASTOS</code></strong> = (14.03937*EDAD) + (0.88277*INGRESO) + (4.89765*GASTO_DIARIO_TRANSPORTE) - (438.23*ESTADO_CIVIL_DIVORCIADO) - (278.54*ESTADO_CIVIL_OTRO) - (352.77*NIVEL_EDUCATIVO_POSTGRADO) + ERROR.</p>
+<p>Esto indica que a mayor edad, más ingresos, más uso de transporte diario, hay más gastos y que estos disminuyen si las personas se divorcian o su estado civil es categoría “otro” o con la adquisición de postgrados. el error es la parte del modelo que no se puede explicar y que puede estar asociada a variables exógenas no medidas.</p>
+<hr>
+</section>
+</section>
+<section id="figura-del-modelo-de-regresión-realizado" class="level3">
+<h3 class="anchored" data-anchor-id="figura-del-modelo-de-regresión-realizado">Figura del modelo de regresión realizado</h3>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir las variables categóricas a factores</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>GENERO <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>GENERO)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>ESTADO_CIVIL <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>ESTADO_CIVIL)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>NIVEL_EDUCATIVO <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>NIVEL_EDUCATIVO)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>VIVIENDA <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>VIVIENDA)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>CALIFICACION_SERVIVCIO_TRANSPORTE <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(datos<span class="sc">$</span>CALIFICACION_SERVIVCIO_TRANSPORTE)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear el modelo de regresión con las variables solicitadas</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>modelo_significativo <span class="ot">&lt;-</span> <span class="fu">lm</span>(GASTOS <span class="sc">~</span> EDAD <span class="sc">+</span> INGRESO <span class="sc">+</span> GASTO_DIARIO_TRANSPORTE <span class="sc">+</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                            ESTADO_CIVIL <span class="sc">+</span> NIVEL_EDUCATIVO, <span class="at">data =</span> datos)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Resumen del modelo para verificar las variables significativas</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_significativo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = GASTOS ~ EDAD + INGRESO + GASTO_DIARIO_TRANSPORTE + 
+    ESTADO_CIVIL + NIVEL_EDUCATIVO, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-854.74 -113.51    1.63  151.89  586.94 
+
+Coefficients:
+                               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  -294.04748  147.18703  -1.998  0.04927 *  
+EDAD                            9.69729    3.07226   3.156  0.00228 ** 
+INGRESO                         0.86928    0.03429  25.349  &lt; 2e-16 ***
+GASTO_DIARIO_TRANSPORTE         2.97448    1.28995   2.306  0.02381 *  
+ESTADO_CIVILDIVORCIADO       -479.11831  100.47539  -4.769 8.61e-06 ***
+ESTADO_CIVILOTRO             -166.67487   96.76798  -1.722  0.08901 .  
+ESTADO_CIVILSOLTERO           159.99787   76.50342   2.091  0.03979 *  
+NIVEL_EDUCATIVOPOSTGRADO     -312.45617  140.90282  -2.218  0.02954 *  
+NIVEL_EDUCATIVOPRIMARIA       -63.46494  108.17341  -0.587  0.55912    
+NIVEL_EDUCATIVOTECNICO        -35.07298  113.66881  -0.309  0.75849    
+NIVEL_EDUCATIVOUNIVERSITARIO  -67.46014  113.58925  -0.594  0.55432    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 260.1 on 77 degrees of freedom
+Multiple R-squared:  0.9526,    Adjusted R-squared:  0.9464 
+F-statistic: 154.7 on 10 and 77 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar las relaciones de las variables seleccionadas con GASTOS</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 1: EDAD vs GASTOS</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> EDAD, <span class="at">y =</span> GASTOS)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre Edad y Gastos"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Edad"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Gastos"</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="datos_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 2: INGRESO vs GASTOS</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> INGRESO, <span class="at">y =</span> GASTOS)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre Ingreso y Gastos"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Ingreso"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Gastos"</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="datos_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 3: GASTO_DIARIO_TRANSPORTE vs GASTOS</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log10</span>(GASTO_DIARIO_TRANSPORTE), <span class="at">y =</span> GASTOS)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre Gasto Diario en Transporte y Gastos"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Gasto Diario en Transporte"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Gastos"</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="datos_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 4: ESTADO_CIVIL vs GASTOS</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> ESTADO_CIVIL, <span class="at">y =</span> GASTOS, <span class="at">fill =</span> ESTADO_CIVIL)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre Estado Civil y Gastos"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Estado Civil"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Gastos"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="datos_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 5: NIVEL_EDUCATIVO vs GASTOS</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> NIVEL_EDUCATIVO, <span class="at">y =</span> GASTOS, <span class="at">fill =</span> NIVEL_EDUCATIVO)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre Nivel Educativo y Gastos"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Nivel Educativo"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Gastos"</span>) <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="datos_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
