@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Relación Sargasum vs.&nbsp;crecimiento de Pez Dorada</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="datos_resum_files/libs/clipboard/clipboard.min.js"></script>
+<script src="datos_resum_files/libs/quarto-html/quarto.js"></script>
+<script src="datos_resum_files/libs/quarto-html/popper.min.js"></script>
+<script src="datos_resum_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="datos_resum_files/libs/quarto-html/anchor.min.js"></script>
+<link href="datos_resum_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="datos_resum_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="datos_resum_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="datos_resum_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="datos_resum_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<style>
+    .quarto-title-block .quarto-title-banner {
+      background: #decbe4;
+    }
+    </style>
+
+<script src="datos_resum_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="datos_resum_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="styles2.css">
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Relación Sargasum vs.&nbsp;crecimiento de Pez Dorada</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Fecha de publicación</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">10 de junio de 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de Contenido</h2>
+   
+  <ul>
+  <li><a href="#preparación-y-exploración-de-datos" id="toc-preparación-y-exploración-de-datos" class="nav-link active" data-scroll-target="#preparación-y-exploración-de-datos">1. Preparación y exploración de datos</a></li>
+  <li><a href="#pruebas-de-supuestos" id="toc-pruebas-de-supuestos" class="nav-link" data-scroll-target="#pruebas-de-supuestos">2. Pruebas de supuestos</a>
+  <ul>
+  <li><a href="#normalidad-de-residuos" id="toc-normalidad-de-residuos" class="nav-link" data-scroll-target="#normalidad-de-residuos">2.1 Normalidad de residuos</a></li>
+  <li><a href="#homogeneidad-de-varianzas" id="toc-homogeneidad-de-varianzas" class="nav-link" data-scroll-target="#homogeneidad-de-varianzas">2.2 Homogeneidad de varianzas</a></li>
+  <li><a href="#independencia-de-los-residuales-del-anova" id="toc-independencia-de-los-residuales-del-anova" class="nav-link" data-scroll-target="#independencia-de-los-residuales-del-anova">2.3 Independencia de los residuales del Anova</a></li>
+  </ul></li>
+  <li><a href="#anova-a-una-vía-y-post-hoc-de-tukey" id="toc-anova-a-una-vía-y-post-hoc-de-tukey" class="nav-link" data-scroll-target="#anova-a-una-vía-y-post-hoc-de-tukey">3. ANOVA a una vía y post-hoc de Tukey</a></li>
+  <li><a href="#visualizaciones" id="toc-visualizaciones" class="nav-link" data-scroll-target="#visualizaciones">4. Visualizaciones</a>
+  <ul>
+  <li><a href="#boxplots-con-letras-de-grupos" id="toc-boxplots-con-letras-de-grupos" class="nav-link" data-scroll-target="#boxplots-con-letras-de-grupos">4.1 Boxplots con letras de grupos</a></li>
+  <li><a href="#gráfico-de-medias-error-estándar" id="toc-gráfico-de-medias-error-estándar" class="nav-link" data-scroll-target="#gráfico-de-medias-error-estándar">4.2 Gráfico de medias ± error estándar</a></li>
+  </ul></li>
+  <li><a href="#tamaño-del-efecto-ges-con-peso-y-talla" id="toc-tamaño-del-efecto-ges-con-peso-y-talla" class="nav-link" data-scroll-target="#tamaño-del-efecto-ges-con-peso-y-talla">5. Tamaño del efecto (ges) con peso y talla</a></li>
+  <li><a href="#tamaño-del-efecto-con-índice-de-condición---k" id="toc-tamaño-del-efecto-con-índice-de-condición---k" class="nav-link" data-scroll-target="#tamaño-del-efecto-con-índice-de-condición---k">6. Tamaño del efecto con índice de condición - K</a></li>
+  <li><a href="#modelo-de-efectos-mixtos-con-índice-de-condición-k" id="toc-modelo-de-efectos-mixtos-con-índice-de-condición-k" class="nav-link" data-scroll-target="#modelo-de-efectos-mixtos-con-índice-de-condición-k">7. Modelo de efectos mixtos con índice de condición K</a></li>
+  <li><a href="#modelo-de-efectos-mixtos-con-peso-y-talla" id="toc-modelo-de-efectos-mixtos-con-peso-y-talla" class="nav-link" data-scroll-target="#modelo-de-efectos-mixtos-con-peso-y-talla">8. Modelo de efectos mixtos con peso y talla</a></li>
+  <li><a href="#anova-de-condición-k" id="toc-anova-de-condición-k" class="nav-link" data-scroll-target="#anova-de-condición-k">9. ANOVA de condición K</a>
+  <ul>
+  <li><a href="#preparación-de-datos" id="toc-preparación-de-datos" class="nav-link" data-scroll-target="#preparación-de-datos">1. Preparación de datos</a></li>
+  <li><a href="#estadística-descriptiva" id="toc-estadística-descriptiva" class="nav-link" data-scroll-target="#estadística-descriptiva">2. Estadística descriptiva</a></li>
+  <li><a href="#pruebas-de-supuestos-1" id="toc-pruebas-de-supuestos-1" class="nav-link" data-scroll-target="#pruebas-de-supuestos-1">3. Pruebas de supuestos</a></li>
+  <li><a href="#anova-a-una-vía-y-post-hoc-de-tukey-1" id="toc-anova-a-una-vía-y-post-hoc-de-tukey-1" class="nav-link" data-scroll-target="#anova-a-una-vía-y-post-hoc-de-tukey-1">4. ANOVA a una vía y post-hoc de Tukey</a></li>
+  <li><a href="#visualización-de-resultados" id="toc-visualización-de-resultados" class="nav-link" data-scroll-target="#visualización-de-resultados">5. Visualización de resultados</a></li>
+  </ul></li>
+  <li><a href="#kruskal-wallis" id="toc-kruskal-wallis" class="nav-link" data-scroll-target="#kruskal-wallis">10. Kruskal Wallis</a>
+  <ul>
+  <li><a href="#post-hoc-con-dunn-y-corrección" id="toc-post-hoc-con-dunn-y-corrección" class="nav-link" data-scroll-target="#post-hoc-con-dunn-y-corrección">1. Post-hoc con Dunn y corrección</a></li>
+  <li><a href="#tamaño-del-efecto-no-paramétrico" id="toc-tamaño-del-efecto-no-paramétrico" class="nav-link" data-scroll-target="#tamaño-del-efecto-no-paramétrico">2. Tamaño del efecto no-paramétrico</a></li>
+  <li><a href="#visualización" id="toc-visualización" class="nav-link" data-scroll-target="#visualización">4. Visualización</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>title: “Relación Sargasum vs.&nbsp;crecimiento de Pez Dorada” date: “last-modified” title-block-banner: “#decbe4” format: html: toc: true toc-depth: 4 toc-title: “Tabla de Contenido” number-sections: false # &lt;- Cambio aquí theme: cosmo css: styles2.css code-fold: true code-summary: “Mostrar código” lang: es editor: visual</p>
+<hr>
+<section id="preparación-y-exploración-de-datos" class="level3">
+<h3 class="anchored" data-anchor-id="preparación-y-exploración-de-datos">1. Preparación y exploración de datos</h3>
+<p>Tabla. Resumen de las 6 primeras filas de la base de datos.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Tratamiento </th>
+   <th style="text-align:right;"> Réplica </th>
+   <th style="text-align:right;"> Talla </th>
+   <th style="text-align:right;"> Peso </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 10.5 </td>
+   <td style="text-align:right;"> 13 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 9.0 </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 10.6 </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 10.5 </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 9.8 </td>
+   <td style="text-align:right;"> 12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 9.4 </td>
+   <td style="text-align:right;"> 9 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>Tabla. Estadísticos descriptivos para las tallas</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,248
+Columns: 4
+$ Tratamiento &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ Réplica     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2…
+$ Talla       &lt;dbl&gt; 10.5, 9.0, 10.6, 10.5, 9.8, 9.4, 10.0, 10.2, 9.4, 9.8, 9.0…
+$ Peso        &lt;dbl&gt; 13, 10, 15, 15, 12, 9, 12, 12, 9, 12, 9, 9, 14, 12, 10, 10…</code></pre>
+</div>
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Tratamiento </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> prom_Talla </th>
+   <th style="text-align:right;"> desv_Talla </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 14.90511 </td>
+   <td style="text-align:right;"> 3.350417 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0.15 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 15.12236 </td>
+   <td style="text-align:right;"> 4.843845 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0.2 </td>
+   <td style="text-align:right;"> 308 </td>
+   <td style="text-align:right;"> 14.83182 </td>
+   <td style="text-align:right;"> 3.103139 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CONTROL </td>
+   <td style="text-align:right;"> 314 </td>
+   <td style="text-align:right;"> 13.85764 </td>
+   <td style="text-align:right;"> 2.782985 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<hr>
+</section>
+<section id="pruebas-de-supuestos" class="level3">
+<h3 class="anchored" data-anchor-id="pruebas-de-supuestos">2. Pruebas de supuestos</h3>
+<section id="normalidad-de-residuos" class="level4">
+<h4 class="anchored" data-anchor-id="normalidad-de-residuos">2.1 Normalidad de residuos</h4>
+<p>No se cumple el supuesto de normalidad para tallas ni para pesos (valor p &lt; 0.05).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  variable             statistic  p.value
+  &lt;chr&gt;                    &lt;dbl&gt;    &lt;dbl&gt;
+1 residuals(mod_talla)     0.822 4.25e-35</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  variable            statistic  p.value
+  &lt;chr&gt;                   &lt;dbl&gt;    &lt;dbl&gt;
+1 residuals(mod_peso)     0.956 5.22e-19</code></pre>
+</div>
+</div>
+</section>
+<section id="homogeneidad-de-varianzas" class="level4">
+<h4 class="anchored" data-anchor-id="homogeneidad-de-varianzas">2.2 Homogeneidad de varianzas</h4>
+<p>No se cumple el supuesto de homogeneidad para tallas ni para pesos (valor p &lt; 0.05).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+        Df F value   Pr(&gt;F)   
+group    3  3.8785 0.008944 **
+      1244                    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+        Df F value    Pr(&gt;F)    
+group    3  14.522 2.664e-09 ***
+      1244                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="independencia-de-los-residuales-del-anova" class="level4">
+<h4 class="anchored" data-anchor-id="independencia-de-los-residuales-del-anova">2.3 Independencia de los residuales del Anova</h4>
+<p><strong>Nota</strong>: asume un diseño completamente aleatorizado.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="anova-a-una-vía-y-post-hoc-de-tukey" class="level3">
+<h3 class="anchored" data-anchor-id="anova-a-una-vía-y-post-hoc-de-tukey">3. ANOVA a una vía y post-hoc de Tukey</h3>
+<p>Al incumplirse los supuestos, este Anova pierde capacidad de resolución para encontrar diferencias entre tratamientos. Sin embargo se ejecuta y muestra diferencias entre tallas y pesos, especialmente Control vs.&nbsp;tratamiento al 15%.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Talla ~ Tratamiento, data = df)
+
+$Tratamiento
+                    diff        lwr        upr     p adj
+0.15-0        0.21725240 -0.5248925  0.9593973 0.8753707
+0.2-0        -0.07329364 -0.8184444  0.6718571 0.9943157
+CONTROL-0    -1.04746851 -1.7890223 -0.3059148 0.0016531
+0.2-0.15     -0.29054604 -1.0356968  0.4546047 0.7476423
+CONTROL-0.15 -1.26472091 -2.0062747 -0.5231671 0.0000733
+CONTROL-0.2  -0.97417487 -1.7187369 -0.2296129 0.0043684</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Peso ~ Tratamiento, data = df)
+
+$Tratamiento
+                   diff        lwr       upr     p adj
+0.15-0        -1.101917  -6.994769  4.790935 0.9632983
+0.2-0         -4.055175  -9.971894  1.861544 0.2917451
+CONTROL-0    -14.721469 -20.609627 -8.833311 0.0000000
+0.2-0.15      -2.953258  -8.869978  2.963461 0.5732879
+CONTROL-0.15 -13.619552 -19.507710 -7.731394 0.0000000
+CONTROL-0.2  -10.666294 -16.578338 -4.754249 0.0000227</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="visualizaciones" class="level3">
+<h3 class="anchored" data-anchor-id="visualizaciones">4. Visualizaciones</h3>
+<section id="boxplots-con-letras-de-grupos" class="level4">
+<h4 class="anchored" data-anchor-id="boxplots-con-letras-de-grupos">4.1 Boxplots con letras de grupos</h4>
+<p><strong>Hay un dato de 77,1 cm de talla que es atípico</strong>, se sugiere eliminar.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="gráfico-de-medias-error-estándar" class="level4">
+<h4 class="anchored" data-anchor-id="gráfico-de-medias-error-estándar">4.2 Gráfico de medias ± error estándar</h4>
+<p>Se muestra el problema del dato atípico en el tratamiento 0.15 (15%).</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="tamaño-del-efecto-ges-con-peso-y-talla" class="level3">
+<h3 class="anchored" data-anchor-id="tamaño-del-efecto-ges-con-peso-y-talla">5. Tamaño del efecto (ges) con peso y talla</h3>
+<p>Cálculo del tamaño del efecto (η² generalizada, ges) para <strong>Talla</strong> y <strong>Peso</strong>.</p>
+<p>El <strong>η² (eta al cuadrado)</strong> se calcula en el ANOVA para cuantificar el tamaño del efecto del factor bajo estudio; esto es, la proporción de la varianza total de la variable respuesta (talla o peso) que se atribuye a las diferencias entre los niveles del factor (tratamiento). Si el ANOVA arroja un η² pequeño, la potencia resultante será baja (&lt; 0.8), por lo que se necesitará aumentar el tamaño de muestra o optimizar el diseño para detectar el efecto con confianza.</p>
+<ul>
+<li><p><strong>ges</strong> es el tamaño del efecto (η² generalizada). Interpreta valores de η² como:</p>
+<ul>
+<li><p>~0.01 = pequeño,</p></li>
+<li><p>~0.06 = mediano,</p></li>
+<li><p>~0.14 = grande.</p></li>
+</ul></li>
+</ul>
+<p>Para el caso de las tallas <strong>ges: 0.018</strong> indica un efecto pequeño y para el peso <strong>ges: 0.04</strong> que indica un efecto mediano.</p>
+<div class="cell">
+
+</div>
+<p>Forma resumida de visualizar F, p y η² para <strong>Talla</strong> y <strong>Peso</strong>.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Variable </th>
+   <th style="text-align:right;"> DFn </th>
+   <th style="text-align:right;"> DFd </th>
+   <th style="text-align:right;"> F </th>
+   <th style="text-align:right;"> p </th>
+   <th style="text-align:right;"> ges </th>
+   <th style="text-align:left;"> magnitude </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Talla </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1244 </td>
+   <td style="text-align:right;"> 7.589 </td>
+   <td style="text-align:right;"> 4.96e-05 </td>
+   <td style="text-align:right;"> 0.018 </td>
+   <td style="text-align:left;"> Pequeño </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Peso </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1244 </td>
+   <td style="text-align:right;"> 17.264 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 0.040 </td>
+   <td style="text-align:left;"> Mediano </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><p>Para el caso de la <strong>talla</strong>, Un <strong>η²g ≈ 0.018</strong> significa que sólo el <strong>1.8 %</strong> de la variación total en la talla de los juveniles se explica por los distintos niveles de inclusión de <em>S. cymosum</em>. Según las convenciones de Cohen esto se considera un <strong>efecto pequeño</strong>, lo cual implica:</p>
+<p>Aunque el ANOVA mostró diferencias significativas, un cambio tan pequeño podría no traducirse en una diferencia de talla que sea práctica o relevante para el rendimiento productivo esperado.</p>
+<p>Para confirmar o refutar este pequeño efecto, <strong>sería conveniente aumentar el tamaño de la muestra</strong> (más réplicas o más peces por réplica) o incluir covariables (por ejemplo temperatura, salinidad, etc.) en un modelo mixto, para reducir la variabilidad residual y mejorar la potencia.</p></li>
+<li><p>Para el caso del <strong>peso</strong>, Un η²g ≈ 0.04 indica que el 4 % de la variación en peso está explicado por el tratamiento. Esto se clasifica como un <strong>efecto mediano</strong>. Un 4 % puede ser perceptible y de interés cuando el peso es el objetivo primario de producción. <strong>Se aconseja poner énfasis en el peso</strong> como métrica de crecimiento sensible al suplemento de <em>S. cymosum</em>. Aunque más prometedor que la talla, sigue siendo un efecto moderado, <strong>por lo que optimizar dosis</strong>, <strong>tiempos de exposición</strong> y seguimiento o la forma de presentación de la alga podría incrementar su impacto.</p></li>
+<li><p>Finalmente, para futuros ensayos se sugiere (1) aumentar la replicación (réplicas y número de peces). (2) Controlar mejor las fuentes de variabilidad (variables ambientales). Incluir covariables en un modelo mixto o ANCOVA para mejorar la precisión.</p></li>
+<li><p>Tambien se puede <strong>Complementar con otras métricas de crecimiento derivadas</strong> como el <strong>Índice de condición</strong> (K = 100 × Peso / Talla³) o la tasa de crecimiento relativa diaria, las cuales pueden pueden revelar efectos más sensibles al tratamiento.</p></li>
+</ul>
+<hr>
+</section>
+<section id="tamaño-del-efecto-con-índice-de-condición---k" class="level3">
+<h3 class="anchored" data-anchor-id="tamaño-del-efecto-con-índice-de-condición---k">6. Tamaño del efecto con índice de condición - K</h3>
+<p>En este sentido, la inclusión de <em>S. cymosum</em> explica casi un 10 % de la variación en el <strong>índice de condición (K)</strong>, <strong>frente a sólo 1–4 % en talla o peso</strong>. K refleja la “<strong>corpulencia</strong>” o <strong>estado nutricional relativo</strong> (energías y reservas) de los peces. Un gran efecto aquí indica que el suplemento de <strong>Sargassum mejora sustancialmente la condición corporal</strong>, posiblemente por mayor retención de proteínas o lípidos.</p>
+<p>En este sentido se <strong>sugiere priorizar a K como la variable respuesta</strong> de crecimiento o nutrición. Si K aumenta notoriamente con la concentración actual de harina de <em>S. cymosum</em>, <strong>probar niveles menores o mayores para delimitar la curva dosis-respuesta</strong>. Un efecto grande a corto plazo sugiere que K podría seguir aumentando o estabilizarse; se sugiere aumentar el tiempo del experimento para ver la dinámica temporal de la condición - K.</p>
+<p>También se puede probar un <strong>Modelo mixto</strong> sobre K, para incluir “Réplica” como efecto aleatorio y ver si aporta variabilidad.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Tratamiento </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> media_K </th>
+   <th style="text-align:right;"> sd_K </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 1.324732 </td>
+   <td style="text-align:right;"> 0.1143746 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0.15 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 1.305536 </td>
+   <td style="text-align:right;"> 0.1765966 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0.2 </td>
+   <td style="text-align:right;"> 308 </td>
+   <td style="text-align:right;"> 1.263938 </td>
+   <td style="text-align:right;"> 0.0980117 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CONTROL </td>
+   <td style="text-align:right;"> 314 </td>
+   <td style="text-align:right;"> 1.213318 </td>
+   <td style="text-align:right;"> 0.1166998 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Effect </th>
+   <th style="text-align:right;"> DFn </th>
+   <th style="text-align:right;"> DFd </th>
+   <th style="text-align:right;"> F </th>
+   <th style="text-align:right;"> p </th>
+   <th style="text-align:left;"> p&lt;.05 </th>
+   <th style="text-align:right;"> ges </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Tratamiento </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1244 </td>
+   <td style="text-align:right;"> 45.246 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:left;"> * </td>
+   <td style="text-align:right;"> 0.098 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="modelo-de-efectos-mixtos-con-índice-de-condición-k" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-de-efectos-mixtos-con-índice-de-condición-k">7. Modelo de efectos mixtos con índice de condición K</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Groups   Name        Std.Dev. 
+ Réplica  (Intercept) 0.0060797
+ Residual             0.1296484</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><p><strong>El efecto de “Réplica” es prácticamente nulo o cero</strong>: aportando muy poca explicación de la variabilidad en el Índice de Condición - K. en este sentido, con este modelo mixto <strong>no se gana precisión</strong> sustancial unsando Ráplicas como el término aleatorio.</p></li>
+<li><p>En este sentido se sugiere <strong>Eliminar “Réplica”</strong> y usar un ANOVA clásico (<code>aov(K ~ Tratamiento)</code>), Incluir “Réplica” como factor fijo en un modelo lineal <code>lm(K ~ Tratamiento + Replica)</code>, “bloqueando” el pequeño efecto de las replicas.</p></li>
+<li><p>Dado que casi toda la variación está en el <strong>residual</strong>, <strong>un ANOVA a una vía sobre K</strong> podría dar resultados más sencillos de interpretar.</p></li>
+</ol>
+<hr>
+</section>
+<section id="modelo-de-efectos-mixtos-con-peso-y-talla" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-de-efectos-mixtos-con-peso-y-talla">8. Modelo de efectos mixtos con peso y talla</h3>
+<p>Asumiendo a replicas como un factor aleatorio. Modelos lineales mixtos para <strong>Talla</strong> y <strong>Peso</strong>, considerando <strong>“Réplica”</strong> como efecto aleatorio (intercepto). Iniciamos con un diagnóstico rápido de singularidad de las Réplicas.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Groups   Name        Std.Dev.
+ Réplica  (Intercept) 0.0000  
+ Residual             3.6032  </code></pre>
+</div>
+</div>
+<p>La varianza estimada para el efecto aleatorio <strong>Replica</strong> es esencialmente cero. En otras palabras, el modelo no “necesita” ese término aleatorio porque toda la variación viene del residual. Por esta razón, no es necesario el modelo mixto y se puede volver al <strong>ANOVA</strong> simple o su opción no paramétrica <strong>Kruskal Wallis</strong>.</p>
+<hr>
+</section>
+<section id="anova-de-condición-k" class="level3">
+<h3 class="anchored" data-anchor-id="anova-de-condición-k">9. ANOVA de condición K</h3>
+<section id="preparación-de-datos" class="level4">
+<h4 class="anchored" data-anchor-id="preparación-de-datos">1. Preparación de datos</h4>
+<div class="cell">
+
+</div>
+</section>
+<section id="estadística-descriptiva" class="level4">
+<h4 class="anchored" data-anchor-id="estadística-descriptiva">2. Estadística descriptiva</h4>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Tratamiento </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> prom_K </th>
+   <th style="text-align:right;"> desv_K </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 1.324732 </td>
+   <td style="text-align:right;"> 0.1143746 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0.15 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 1.305536 </td>
+   <td style="text-align:right;"> 0.1765966 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 0.2 </td>
+   <td style="text-align:right;"> 308 </td>
+   <td style="text-align:right;"> 1.263938 </td>
+   <td style="text-align:right;"> 0.0980117 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CONTROL </td>
+   <td style="text-align:right;"> 314 </td>
+   <td style="text-align:right;"> 1.213318 </td>
+   <td style="text-align:right;"> 0.1166998 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="pruebas-de-supuestos-1" class="level4">
+<h4 class="anchored" data-anchor-id="pruebas-de-supuestos-1">3. Pruebas de supuestos</h4>
+<section id="normalidad-de-residuos-1" class="level5">
+<h5 class="anchored" data-anchor-id="normalidad-de-residuos-1">3.1 Normalidad de residuos</h5>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  variable         statistic  p.value
+  &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;
+1 residuals(mod_K)     0.821 3.62e-35</code></pre>
+</div>
+</div>
+</section>
+<section id="homogeneidad-de-varianzas-1" class="level5">
+<h5 class="anchored" data-anchor-id="homogeneidad-de-varianzas-1">3.2 Homogeneidad de varianzas</h5>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+        Df F value    Pr(&gt;F)    
+group    3  7.2896 7.576e-05 ***
+      1244                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="independencia" class="level5">
+<h5 class="anchored" data-anchor-id="independencia">3.3 Independencia</h5>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="anova-a-una-vía-y-post-hoc-de-tukey-1" class="level4">
+<h4 class="anchored" data-anchor-id="anova-a-una-vía-y-post-hoc-de-tukey-1">4. ANOVA a una vía y post-hoc de Tukey</h4>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+Tratamiento    3  2.294  0.7646   45.25 &lt;2e-16 ***
+Residuals   1244 21.023  0.0169                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Effect Size for ANOVA (Type I)
+
+Parameter   | Eta2 |       95% CI
+---------------------------------
+Tratamiento | 0.10 | [0.07, 1.00]
+
+- One-sided CIs: upper bound fixed at [1.00].</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = K ~ Tratamiento, data = df)
+
+$Tratamiento
+                    diff         lwr          upr     p adj
+0.15-0       -0.01919632 -0.04592890  0.007536264 0.2517331
+0.2-0        -0.06079450 -0.08763536 -0.033953647 0.0000000
+CONTROL-0    -0.11141426 -0.13812555 -0.084702971 0.0000000
+0.2-0.15     -0.04159818 -0.06843904 -0.014757327 0.0004115
+CONTROL-0.15 -0.09221794 -0.11892923 -0.065506651 0.0000000
+CONTROL-0.2  -0.05061976 -0.07743941 -0.023800108 0.0000081</code></pre>
+</div>
+</div>
+</section>
+<section id="visualización-de-resultados" class="level4">
+<h4 class="anchored" data-anchor-id="visualización-de-resultados">5. Visualización de resultados</h4>
+<section id="boxplot-letras-de-tukey-rstatix-ggpubr" class="level5">
+<h5 class="anchored" data-anchor-id="boxplot-letras-de-tukey-rstatix-ggpubr">5.1 Boxplot + letras de Tukey (rstatix + ggpubr)</h5>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:left;"> group1 </th>
+   <th style="text-align:left;"> group2 </th>
+   <th style="text-align:right;"> null.value </th>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> conf.low </th>
+   <th style="text-align:right;"> conf.high </th>
+   <th style="text-align:right;"> p.adj </th>
+   <th style="text-align:left;"> p.adj.signif </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Tratamiento </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 0.15 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.0191963 </td>
+   <td style="text-align:right;"> -0.0459289 </td>
+   <td style="text-align:right;"> 0.0075363 </td>
+   <td style="text-align:right;"> 2.52e-01 </td>
+   <td style="text-align:left;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tratamiento </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 0.2 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.0607945 </td>
+   <td style="text-align:right;"> -0.0876354 </td>
+   <td style="text-align:right;"> -0.0339536 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tratamiento </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> CONTROL </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.1114143 </td>
+   <td style="text-align:right;"> -0.1381256 </td>
+   <td style="text-align:right;"> -0.0847030 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tratamiento </td>
+   <td style="text-align:left;"> 0.15 </td>
+   <td style="text-align:left;"> 0.2 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.0415982 </td>
+   <td style="text-align:right;"> -0.0684390 </td>
+   <td style="text-align:right;"> -0.0147573 </td>
+   <td style="text-align:right;"> 4.11e-04 </td>
+   <td style="text-align:left;"> *** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tratamiento </td>
+   <td style="text-align:left;"> 0.15 </td>
+   <td style="text-align:left;"> CONTROL </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.0922179 </td>
+   <td style="text-align:right;"> -0.1189292 </td>
+   <td style="text-align:right;"> -0.0655067 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tratamiento </td>
+   <td style="text-align:left;"> 0.2 </td>
+   <td style="text-align:left;"> CONTROL </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.0506198 </td>
+   <td style="text-align:right;"> -0.0774394 </td>
+   <td style="text-align:right;"> -0.0238001 </td>
+   <td style="text-align:right;"> 8.10e-06 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="kruskal-wallis" class="level3">
+<h3 class="anchored" data-anchor-id="kruskal-wallis">10. Kruskal Wallis</h3>
+<p>Como no se cumplen ni la normalidad ni la homogeneidad de varianzas, la <strong>prueba de Kruskal–Wallis</strong> es la alternativa no-paramétrica al ANOVA a una vía.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+  .y.       n statistic    df        p method        
+* &lt;chr&gt; &lt;int&gt;     &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;         
+1 K      1248      202.     3 1.41e-43 Kruskal-Wallis</code></pre>
+</div>
+</div>
+<section id="post-hoc-con-dunn-y-corrección" class="level4">
+<h4 class="anchored" data-anchor-id="post-hoc-con-dunn-y-corrección">1. Post-hoc con Dunn y corrección</h4>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> .y. </th>
+   <th style="text-align:left;"> group1 </th>
+   <th style="text-align:left;"> group2 </th>
+   <th style="text-align:right;"> n1 </th>
+   <th style="text-align:right;"> n2 </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p </th>
+   <th style="text-align:right;"> p.adj </th>
+   <th style="text-align:left;"> p.adj.signif </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> K </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 0.15 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> -2.744077 </td>
+   <td style="text-align:right;"> 0.0060681 </td>
+   <td style="text-align:right;"> 0.0364088 </td>
+   <td style="text-align:left;"> * </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> K </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 0.2 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 308 </td>
+   <td style="text-align:right;"> -7.532087 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> K </td>
+   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> CONTROL </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 314 </td>
+   <td style="text-align:right;"> -13.220930 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> K </td>
+   <td style="text-align:left;"> 0.15 </td>
+   <td style="text-align:left;"> 0.2 </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 308 </td>
+   <td style="text-align:right;"> -4.799079 </td>
+   <td style="text-align:right;"> 0.0000016 </td>
+   <td style="text-align:right;"> 0.0000096 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> K </td>
+   <td style="text-align:left;"> 0.15 </td>
+   <td style="text-align:left;"> CONTROL </td>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 314 </td>
+   <td style="text-align:right;"> -10.474666 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> K </td>
+   <td style="text-align:left;"> 0.2 </td>
+   <td style="text-align:left;"> CONTROL </td>
+   <td style="text-align:right;"> 308 </td>
+   <td style="text-align:right;"> 314 </td>
+   <td style="text-align:right;"> -5.629472 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000001 </td>
+   <td style="text-align:left;"> **** </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="tamaño-del-efecto-no-paramétrico" class="level4">
+<h4 class="anchored" data-anchor-id="tamaño-del-efecto-no-paramétrico">2. Tamaño del efecto no-paramétrico</h4>
+<p>Se obtiene <strong>ε² (epsilon-cuadrado)</strong>, que indica la proporción de varianza explicada en el contexto no paramétrico. El <strong>ε²</strong> es análoga al η² en ANOVA. Es un <strong>índice de magnitud de efecto no paramétrico asociado al test de Kruskal–Wallis</strong>. Su propósito es cuantificar qué proporción de la variabilidad total de las <strong>posiciones</strong> (ranks) de la variable respuesta (K), se explica por el factor de tratamiento.</p>
+<p><strong>ε² ≈ 0.16</strong> significa que <strong>aproximadamente el 16 %</strong> de la variabilidad de los rangos del Índice de Condición K se explica por el tratamiento con distintas dosis de <em>S. cymosum</em>. Con <strong>ε²</strong> ≈ 0.1601 está en el rango de <strong>efecto grande</strong>. Según convenciones similares a Cohen:</p>
+<ul>
+<li><p><strong>&lt; 0.01</strong>: efecto pequeño</p></li>
+<li><p><strong>0.01–0.06</strong>: efecto mediano</p></li>
+<li><p><strong>&gt; 0.14</strong>: efecto grande</p></li>
+</ul>
+<p>Un <strong>16 % de varianza explicada</strong> en un test no paramétrico es sustancial: el tratamiento con harina de <em>S. cymosum</em> tiene un impacto claro y notable sobre la condición corporal de los peces.</p>
+<p>Dado que <strong>Kruskal–Wallis</strong> compara distribuciones de rangos, un gran <strong>ε²</strong> indica que no es sólo un par de valores extremos los que diferencian grupos, sino un cambio consistente en la posición central de los datos.</p>
+<p>Esto confirma de forma cuantitativa que la inclusión de <em>Sargassum cymosum</em> en la dieta explica una proporción importante de la variación en el Índice de Condición, respaldando su potencial como suplemento nutricional en la acuicultura de <em>Brycon moorei</em>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+  .y.       n effsize method  magnitude
+* &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;ord&gt;    
+1 K      1248   0.160 eta2[H] large    </code></pre>
+</div>
+</div>
+</section>
+<section id="visualización" class="level4">
+<h4 class="anchored" data-anchor-id="visualización">4. Visualización</h4>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="datos_resum_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
