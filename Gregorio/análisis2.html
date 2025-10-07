@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ES-es" xml:lang="ES-es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Javier Rodríguez Barrios">
+<meta name="dcterms.date" content="2025-10-06">
+<meta name="description" content="Análisis descriptivo e inferencial para sus datos de tesis.">
+
+<title>Asesoría 2. Gregorio Peña</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="análisis2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="análisis2_files/libs/quarto-html/quarto.js"></script>
+<script src="análisis2_files/libs/quarto-html/popper.min.js"></script>
+<script src="análisis2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="análisis2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="análisis2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="análisis2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="análisis2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="análisis2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="análisis2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<style>
+    .quarto-title-block .quarto-title-banner {
+      background: #2b8cbe;
+    }
+    </style>
+
+<script src="análisis2_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="análisis2_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles2..css">
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Asesoría 2. Gregorio Peña</h1>
+            <p class="subtitle lead">Análisis descriptivo e inferencial</p>
+                  <div>
+        <div class="description">
+          Análisis descriptivo e inferencial para sus datos de tesis.
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Autor/a</div>
+      <div class="quarto-title-meta-contents">
+               <p>Javier Rodríguez Barrios </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Fecha de publicación</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 6, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Menú flotante</h2>
+   
+  <ul>
+  <li><a href="#resumen-del-ejercicio" id="toc-resumen-del-ejercicio" class="nav-link active" data-scroll-target="#resumen-del-ejercicio">Resumen del ejercicio</a></li>
+  <li><a href="#objetivo" id="toc-objetivo" class="nav-link" data-scroll-target="#objetivo">Objetivo</a></li>
+  <li><a href="#diseño-inferencial-a-aplicar." id="toc-diseño-inferencial-a-aplicar." class="nav-link" data-scroll-target="#diseño-inferencial-a-aplicar.">Diseño inferencial a aplicar.</a>
+  <ul>
+  <li><a href="#cargar-paquetes-y-datos" id="toc-cargar-paquetes-y-datos" class="nav-link" data-scroll-target="#cargar-paquetes-y-datos">1) Cargar paquetes y datos</a>
+  <ul>
+  <li><a href="#contexto-de-la-encuesta-realizada" id="toc-contexto-de-la-encuesta-realizada" class="nav-link" data-scroll-target="#contexto-de-la-encuesta-realizada">Contexto de la encuesta realizada</a></li>
+  </ul></li>
+  <li><a href="#estadística-descriptiva" id="toc-estadística-descriptiva" class="nav-link" data-scroll-target="#estadística-descriptiva">2) Estadística descriptiva</a>
+  <ul>
+  <li><a href="#figura-1.-medias-con-ic95-ordenadas" id="toc-figura-1.-medias-con-ic95-ordenadas" class="nav-link" data-scroll-target="#figura-1.-medias-con-ic95-ordenadas">Figura 1. Medias con IC95% (ordenadas)</a></li>
+  <li><a href="#figura-2.-boxplot-por-indicador" id="toc-figura-2.-boxplot-por-indicador" class="nav-link" data-scroll-target="#figura-2.-boxplot-por-indicador">Figura 2. Boxplot por indicador</a></li>
+  </ul></li>
+  <li><a href="#anova-de-medidas-repetidas-1-factor-12-niveles" id="toc-anova-de-medidas-repetidas-1-factor-12-niveles" class="nav-link" data-scroll-target="#anova-de-medidas-repetidas-1-factor-12-niveles">3) ANOVA de medidas repetidas (1 factor, 12 niveles)</a>
+  <ul>
+  <li><a href="#post-hoc-pareados-dentro-de-sujeto" id="toc-post-hoc-pareados-dentro-de-sujeto" class="nav-link" data-scroll-target="#post-hoc-pareados-dentro-de-sujeto">3.1 Post-hoc (pareados dentro de sujeto)</a></li>
+  </ul></li>
+  <li><a href="#potencia-estadística-tamaño-muestral" id="toc-potencia-estadística-tamaño-muestral" class="nav-link" data-scroll-target="#potencia-estadística-tamaño-muestral">4) Potencia estadística (tamaño muestral)</a></li>
+  <li><a href="#conclusiones-resumen-ejecutivo" id="toc-conclusiones-resumen-ejecutivo" class="nav-link" data-scroll-target="#conclusiones-resumen-ejecutivo">5) Conclusiones (resumen ejecutivo)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="resumen-del-ejercicio" class="level1">
+<h1>Resumen del ejercicio</h1>
+<p>Se organizaron los datos y se calcularon descriptivos por cada uno de los 12 indicadores usados en las encuestas a los estudiantes (media, mediana, desviación estándas: de, varianzas: var, intervalos de confianza: <strong>IC95%</strong>, cuartiles: Q1–Q3 y el índice intercuartílico: IQR), acompañados de dos visualizaciones o figuras: <strong>medias con IC95%</strong> y <strong>boxplots</strong>. Dado que los <strong>mismos estudiantes</strong> respondieron todos los indicadores, se utilizó un <strong>ANOVA de medidas repetidas</strong> (1 factor, 12 niveles). Se <strong>verificó la esfericidad</strong> y, ante su <strong>violación</strong>, se reportó el contraste con <strong>correcciones de Greenhouse–Geisser (GG)</strong> y <strong>Huynh–Feldt (HF)</strong>. Para identificar entre qué indicadores se presentan diferencias estadísticas, se realizó una prueba <strong>post-hoc</strong> con <strong>t pareadas</strong> y <strong>ajuste Bonferroni</strong> para identificar las parejas de indicadores que difieren. Finalmente, se estimó la <strong>potencia</strong> a partir del <strong>tamaño de efecto</strong> observado, para determinar si el tamaño de la muestra es suficiente.</p>
+<p>El ANOVA-RM corregido (GG) fue <strong>significativo</strong> (<em>F</em>(8.09, 1609.26)=<strong>53.56</strong>, <em>p</em>&lt;0.001), con <strong>η²ₚ = 0.212</strong> (efecto <strong>grande</strong>) y <strong>ε_GG ≈ 0.736</strong>, evidenciando <strong>diferencias reales entre algunos indicadores</strong>. La potencia resultó <strong>≈1.00</strong> con <strong>n=200</strong> estudiantes; el <strong>n mínimo</strong> para 80% de potencia fue <strong>≈64</strong> estudiantes bajo esfericidad, confirmando que la muestra es <strong>más que suficiente</strong> para los objetivos del estudio.</p>
+<hr>
+</section>
+<section id="objetivo" class="level1">
+<h1>Objetivo</h1>
+<p>Aplicar <strong>estadística descriptiva e inferencial</strong> para comparar las puntuaciones de <strong>12 indicadores (P1–P12)</strong> evaluados por <strong>200 estudiantes</strong> en un <strong>diseño de medidas repetidas</strong>, e <strong>inferir si existen diferencias significativas</strong> entre indicadores. Adicionalmente, <strong>evaluar la suficiencia muestral</strong> mediante un análisis de <strong>potencia</strong>.</p>
+<hr>
+</section>
+<section id="diseño-inferencial-a-aplicar." class="level1">
+<h1>Diseño inferencial a aplicar.</h1>
+<blockquote class="blockquote">
+<p>Se aplica un <strong>ANOVA de medidas repetidas de 1 factor (12 niveles)</strong></p>
+<p>Es una extensión del ANOVA tradicional utilizada cuando un mismo conjunto de individuos es evaluado en varios niveles de una misma variable o en diferentes condiciones experimentales. Este diseño inferencial tiene en cuenta la <strong>correlación intrapersonal</strong> existente entre las mediciones repetidas de cada estudiante, reduciendo el error experimental y aumentando la potencia estadística. En este ejercicio, el <strong>ANOVA-MR</strong> permite comparar los valores de los <strong>doce indicadores (P1–P12)</strong> medidos en los mismos 200 estudiantes, con el propósito de determinar si existen diferencias estadísticamente significativas entre las medias de los indicadores y, por tanto, contrastar la consistencia o variabilidad de las percepciones estudiantiles frente a las distintas dimensiones evaluadas. Este enfoque es el más adecuado dado que las respuestas provienen de los mismos individuos, evitando la violación de la independencia de las observaciones y proporcionando estimaciones más precisas del efecto real del factor “indicador”.</p>
+</blockquote>
+<section id="cargar-paquetes-y-datos" class="level2">
+<h2 class="anchored" data-anchor-id="cargar-paquetes-y-datos">1) Cargar paquetes y datos</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] '0.9.4'</code></pre>
+</div>
+</div>
+<p>Lectura de la base de datos con los indicadores <strong>P1–P12</strong> con las puntuaciones por estudiante.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 200</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12</code></pre>
+</div>
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Resumen de 6 primeras filas de la encuesta en formato largo</caption>
+ <thead>
+  <tr>
+   <th style="text-align:center;"> estud </th>
+   <th style="text-align:center;"> indicador </th>
+   <th style="text-align:center;"> valor </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> p1 </td>
+   <td style="text-align:center;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> p10 </td>
+   <td style="text-align:center;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> p11 </td>
+   <td style="text-align:center;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> p12 </td>
+   <td style="text-align:center;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> p2 </td>
+   <td style="text-align:center;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> p3 </td>
+   <td style="text-align:center;"> 5 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<section id="contexto-de-la-encuesta-realizada" class="level3">
+<h3 class="anchored" data-anchor-id="contexto-de-la-encuesta-realizada">Contexto de la encuesta realizada</h3>
+<p>En la hoja <strong>“Preguntas x indicador”</strong> hay una descripción cualitativa de cada indicador. La imprimimos como referencia si se requiere.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Muestra de la hoja: Preguntas x indicador</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> VARIABLE: RECURSOS DIGITALES </th>
+   <th style="text-align:left;"> ...2 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Indicador: Recursos de acceso, búsqueda y gestión de información </td>
+   <td style="text-align:left;"> -- </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Aplica la gestión de recursos de acceso y búsqueda con Google (Chrome, Scholar, Book) para combinar las virtuales con las clases presenciales? </td>
+   <td style="text-align:left;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Almacena información en herramientas como el Google Drive o Dropbox? </td>
+   <td style="text-align:left;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Utiliza de apoyo los videotutoriales para explicación de las clases? </td>
+   <td style="text-align:left;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Indicador: Recursos de creación y edición de contenido </td>
+   <td style="text-align:left;"> -- </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Dispone de páginas con objeto de aprendizaje como el slideshare o similares? </td>
+   <td style="text-align:left;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Emplea el blog educativo como herramienta de clases? </td>
+   <td style="text-align:left;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Utiliza herramientas de edición de audio Podcasts para enviar instrucciones o mensajes a los estudiantes? </td>
+   <td style="text-align:left;"> 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Indicador: Recursos de interacción y comunicación </td>
+   <td style="text-align:left;"> -- </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Se comunica con las redes sociales (Facebook, Instagram, twitter, whatsapp, tik tok) para generar interacción o comunicación con los estudiantes? </td>
+   <td style="text-align:left;"> 7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Demuestra habilidades en el uso de herramientas de Videoconferencia (Skype, zoom, team, meet)? </td>
+   <td style="text-align:left;"> 8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Practica el intercambio de información con los estudiantes como el correo electrónico, classroom, mensajería instantánea o similares? </td>
+   <td style="text-align:left;"> 9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Indicador: Recursos avanzados </td>
+   <td style="text-align:left;"> -- </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Utiliza aplicaciones que incluyan inteligencia artificial con responsabilidad? </td>
+   <td style="text-align:left;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Conoce las implicaciones de la realidad aumentada? </td>
+   <td style="text-align:left;"> 11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ¿Plantea situaciones donde se apliquen las funciones de simulaciones en las clases? </td>
+   <td style="text-align:left;"> 12 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="estadística-descriptiva" class="level2">
+<h2 class="anchored" data-anchor-id="estadística-descriptiva">2) Estadística descriptiva</h2>
+<p>A continuación se calculan las <strong>medidas de tendencia central (media, mediana)</strong>, <strong>posición</strong> (Q1, Q3) y <strong>dispersión</strong> (desviaciones estándar: de, errores estándar: ee, varianzas: var, rango intercuartílico: IQR, máximos y mínimos: min, max, coeficiente de variación: cv). Se incluyen los intervalos de confianza IC del 95% para la media (t-Student).</p>
+<p><a href="https://javier-2712.github.io/asesor-as/Gregorio/descriptivos.xlsx">Descargar la tabla completa en Excel.</a></p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Descriptivos por indicador (P1–P12)</caption>
+ <thead>
+  <tr>
+   <th style="text-align:center;"> indicador </th>
+   <th style="text-align:center;"> n </th>
+   <th style="text-align:center;"> media </th>
+   <th style="text-align:center;"> mediana </th>
+   <th style="text-align:center;"> de </th>
+   <th style="text-align:center;"> var </th>
+   <th style="text-align:center;"> q1 </th>
+   <th style="text-align:center;"> q3 </th>
+   <th style="text-align:center;"> iqr </th>
+   <th style="text-align:center;"> min </th>
+   <th style="text-align:center;"> max </th>
+   <th style="text-align:center;"> cv </th>
+   <th style="text-align:center;"> ee </th>
+   <th style="text-align:center;"> tcrit </th>
+   <th style="text-align:center;"> ic_mín </th>
+   <th style="text-align:center;"> ic_máx </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;"> p1 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 3.545 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 1.177 </td>
+   <td style="text-align:center;"> 1.385 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.332 </td>
+   <td style="text-align:center;"> 0.083 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 3.381 </td>
+   <td style="text-align:center;"> 3.709 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p10 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 2.590 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1.135 </td>
+   <td style="text-align:center;"> 1.288 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.438 </td>
+   <td style="text-align:center;"> 0.080 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 2.432 </td>
+   <td style="text-align:center;"> 2.748 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p11 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 2.900 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1.215 </td>
+   <td style="text-align:center;"> 1.477 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.419 </td>
+   <td style="text-align:center;"> 0.086 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 2.731 </td>
+   <td style="text-align:center;"> 3.069 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p12 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 2.570 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1.114 </td>
+   <td style="text-align:center;"> 1.241 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.434 </td>
+   <td style="text-align:center;"> 0.079 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 2.415 </td>
+   <td style="text-align:center;"> 2.725 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p2 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 3.760 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 1.191 </td>
+   <td style="text-align:center;"> 1.419 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.317 </td>
+   <td style="text-align:center;"> 0.084 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 3.594 </td>
+   <td style="text-align:center;"> 3.926 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p3 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 3.595 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 1.117 </td>
+   <td style="text-align:center;"> 1.247 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.311 </td>
+   <td style="text-align:center;"> 0.079 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 3.439 </td>
+   <td style="text-align:center;"> 3.751 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p4 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 3.060 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1.210 </td>
+   <td style="text-align:center;"> 1.464 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.395 </td>
+   <td style="text-align:center;"> 0.086 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 2.891 </td>
+   <td style="text-align:center;"> 3.229 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p5 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 2.590 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1.067 </td>
+   <td style="text-align:center;"> 1.138 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.412 </td>
+   <td style="text-align:center;"> 0.075 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 2.441 </td>
+   <td style="text-align:center;"> 2.739 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p6 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 2.735 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1.136 </td>
+   <td style="text-align:center;"> 1.291 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.415 </td>
+   <td style="text-align:center;"> 0.080 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 2.577 </td>
+   <td style="text-align:center;"> 2.893 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p7 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 3.795 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 1.245 </td>
+   <td style="text-align:center;"> 1.551 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.328 </td>
+   <td style="text-align:center;"> 0.088 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 3.621 </td>
+   <td style="text-align:center;"> 3.969 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p8 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 3.675 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 1.138 </td>
+   <td style="text-align:center;"> 1.296 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.310 </td>
+   <td style="text-align:center;"> 0.080 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 3.516 </td>
+   <td style="text-align:center;"> 3.834 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> p9 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 3.195 </td>
+   <td style="text-align:center;"> 3 </td>
+   <td style="text-align:center;"> 1.189 </td>
+   <td style="text-align:center;"> 1.414 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 4 </td>
+   <td style="text-align:center;"> 2 </td>
+   <td style="text-align:center;"> 1 </td>
+   <td style="text-align:center;"> 5 </td>
+   <td style="text-align:center;"> 0.372 </td>
+   <td style="text-align:center;"> 0.084 </td>
+   <td style="text-align:center;"> 1.972 </td>
+   <td style="text-align:center;"> 3.029 </td>
+   <td style="text-align:center;"> 3.361 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<section id="figura-1.-medias-con-ic95-ordenadas" class="level3">
+<h3 class="anchored" data-anchor-id="figura-1.-medias-con-ic95-ordenadas">Figura 1. Medias con IC95% (ordenadas)</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="análisis2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>La figura ordena a los los indicadores de <strong>mayor a menor media</strong> (de abajo hacia arriba). Se observa un patrón bimodal claro: <strong>p7, p2 y p8</strong> presentan las medias más altas (≈3.9–3.6), seguidos por <strong>p3, p1 y p9</strong>, todos <strong>a la derecha</strong> de la media global (línea discontinua, ~3.15). Por debajo del promedio se ubican <strong>p4</strong> (cercano al umbral) y, con valores menores, <strong>p11, p6, p10, p5 y p12</strong> (≈3.0–2.5). Los IC al 95% son relativamente estrechos y hay <strong>poca superposición</strong> entre el bloque alto (p7–p1–p9) y el bloque bajo (p4–p12), lo que <strong>sugiere</strong> diferencias entre indicadores; no obstante, la <strong>conclusión de significancia</strong> debe basarse en el <strong>ANOVA de medidas repetidas</strong> y sus <strong>post-hoc pareados</strong>, no solo en la inspección visual de los intervalos.</p>
+<hr>
+</section>
+<section id="figura-2.-boxplot-por-indicador" class="level3">
+<h3 class="anchored" data-anchor-id="figura-2.-boxplot-por-indicador">Figura 2. Boxplot por indicador</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="análisis2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>El diagrama de cajas muestra la <strong>variabilidad y simetría</strong> de cada indicador y confirma el patrón visto en la figura anterior de la comparación de medias: los indicadores con cajas desplazadas hacia <strong>valores altos (≈3–4)</strong> concentran respuestas favorables (p.ej., p7, p8, p2), mientras que aquellos con cajas centradas en <strong>≈2–3</strong> exhiben valoraciones comparativamente menores (p.ej., p10, p1). La <strong>altura de las cajas (IQR)</strong> es similar en varios indicadores, lo que sugiere variabilidad comparable, aunque se observan <strong>valores atípicos</strong> en los extremos (1 y 5) en varios casos. La <strong>superposición</strong> de cajas entre bloques altos y bajos es limitada, lo que sugiere diferencias consistentes; sin embargo, la significancia debe confirmarse con el <strong>ANOVA de medidas repetidas</strong> y los <strong>post-hoc pareados</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="anova-de-medidas-repetidas-1-factor-12-niveles" class="level2">
+<h2 class="anchored" data-anchor-id="anova-de-medidas-repetidas-1-factor-12-niveles">3) ANOVA de medidas repetidas (1 factor, 12 niveles)</h2>
+<p>Se verifica la <strong>esfericidad (Mauchly)</strong> y, si se viola, reportamos <strong>correcciones de Greenhouse–Geisser (GG)</strong> y <strong>Huynh–Feldt (HF)</strong>. También calculamos <strong>eta² parcial</strong> y hacemos <strong>post-hoc</strong> con pruebas t pareadas y ajuste de <em>p</em> (Bonferroni).</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>ANOVA Table (type III tests)
+
+     Effect  DFn     DFd     F        p p&lt;.05   pes
+1 indicador 8.09 1609.26 53.56 5.16e-78     * 0.212</code></pre>
+</div>
+</div>
+<p><strong>ANOVA (salida principal).</strong> La tabla <code>type III</code> muestra que el factor <strong>indicador</strong> es altamente significativo con <strong>F(8.09, 1609.26)=53.56</strong>, <strong>p≈5.16×10⁻⁷⁸</strong> y <strong>η²ₚ=0.212</strong> (efecto grande). Los <strong>grados de libertad fraccionarios</strong> indican que se aplicó una <strong>corrección por esfericidad</strong> (r ≈ 0.74 del df teórico 11), por lo que el contraste ya está ajustado y respalda diferencias claras entre los 12 indicadores medidos en los estudiantes.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>ANOVA-RM: sin corrección, GG y HF</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> correccion </th>
+   <th style="text-align:left;"> Effect </th>
+   <th style="text-align:right;"> DFn </th>
+   <th style="text-align:right;"> DFd </th>
+   <th style="text-align:right;"> F </th>
+   <th style="text-align:right;"> p </th>
+   <th style="text-align:right;"> pes </th>
+   <th style="text-align:right;"> eps </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> none </td>
+   <td style="text-align:left;"> indicador </td>
+   <td style="text-align:right;"> 11.00 </td>
+   <td style="text-align:right;"> 2189 </td>
+   <td style="text-align:right;"> 53.56 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.212 </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GG </td>
+   <td style="text-align:left;"> indicador </td>
+   <td style="text-align:right;"> 8.09 </td>
+   <td style="text-align:right;"> 1609 </td>
+   <td style="text-align:right;"> 53.56 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.212 </td>
+   <td style="text-align:right;"> 0.7355 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> HF </td>
+   <td style="text-align:left;"> indicador </td>
+   <td style="text-align:right;"> 8.46 </td>
+   <td style="text-align:right;"> 1684 </td>
+   <td style="text-align:right;"> 53.56 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.212 </td>
+   <td style="text-align:right;"> 0.7691 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><strong>GG</strong> y <strong>HF</strong> son <strong>correcciones de esfericidad</strong> para ANOVA de medidas repetidas:</p>
+<ul>
+<li><p><strong>Esfericidad</strong>: suposición de que las varianzas de las diferencias entre todos los pares de niveles del factor dentro-sujeto son iguales. Si la prueba <strong>Mauchly</strong> es significativa → la esfericidad es <strong>violada</strong>.</p></li>
+<li><p><strong>Qué hacen</strong>: ajustan (reducen) los <strong>grados de libertad</strong> multiplicándolos por un factor <strong>ε (épsilon)</strong>, con lo cual el <em>p-value</em> se vuelve más conservador.</p>
+<ul>
+<li><p><strong>GG (Greenhouse–Geisser)</strong>: más <strong>conservadora</strong>; tiende a <strong>subestimar</strong> ε, reduce más los df.</p></li>
+<li><p><strong>HF (Huynh–Feldt)</strong>: menos conservadora; <strong>sobre-corrige menos</strong> (df algo mayores). Osea que es má estricta con la esfericidad.</p></li>
+</ul></li>
+</ul>
+<p>Aquí se ve el contraste <strong>sin corrección</strong> (DFn=11, DFd=2189) y las versiones <strong>corregidas</strong>: <strong>GG</strong> con <strong>ε≈0.736</strong> (DFn=8.09, DFd=1609) y <strong>HF</strong> con <strong>ε≈0.769</strong> (DFn=8.46, DFd=1684). En las tres, <strong>F=53.56</strong> y el valor-p es esencialmente <strong>&lt;0.001</strong> (aparece 0 por redondeo). Dado que <strong>ε&lt;1</strong>, la esfericidad se viola; por <strong>prudencia</strong> reporta el resultado con <strong>GG</strong> (más conservador) y puedes añadir HF en anexo. Una forma de reporte: <em>“ANOVA-RM (GG): F(8.09, 1609.26)=53.56, p&lt;0.001, η²ₚ=0.212, ε_GG=0.736.”</em></p>
+<p><strong>NOTA:</strong> En este ANOVA-MR o de <strong>medidas repetidas con 1 grupo</strong> (los mismos 200 estudiantes valoran los índicadores P1 a P12), la <strong>condición crítica y específica</strong> del diseño es la <strong>esfericidad</strong>. Esto se debe a que en <strong>medidas repetidas con &gt;2 niveles</strong> (este caso: 12), el estadístico F de dentro-de-estudiantes <strong>solo es válido</strong> si las <strong>varianzas de todas las diferencias por pares</strong> de niveles son <strong>iguales</strong>: eso es la <strong>esfericidad (homogeneidad de varianzas y covarianzas)</strong>. Los demás requisitos de este anova quedan así:</p>
+<ul>
+<li><p><strong>Independencia</strong>: se exige <strong>entre sujetos</strong> (cada estudiante es independiente). Dentro del sujeto hay correlación por diseño; eso <strong>no viola</strong> el modelo, se modela justamente con el ANOVA-RM.</p></li>
+<li><p><strong>Homogeneidad de varianzas</strong>: la versión “entre grupos” no aplica porque <strong>no hay grupos independientes</strong> (ng = 1). En RM, la condición análoga es la <strong>esfericidad</strong> (igualdad de varianzas de las <em>diferencias</em> y de ciertas covarianzas). Por eso probamos/ajustamos <strong>GG/HF</strong>.</p></li>
+<li><p><strong>Normalidad</strong>: el ANOVA-RM asume normalidad (de residuos / multivar.). Con <strong>n = 200</strong>, el test es <strong>bastante robusto</strong> a desviaciones moderadas (CLT). Aun así, puedes verificarla (QQ-plot de residuos) y, si hay dudas fuertes (p.&nbsp;ej., datos muy discretos tipo Likert), complementar con <strong>Friedman/ART</strong> o con <strong>modelos mixtos</strong>.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="análisis2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+<section id="post-hoc-pareados-dentro-de-sujeto" class="level3">
+<h3 class="anchored" data-anchor-id="post-hoc-pareados-dentro-de-sujeto">3.1 Post-hoc (pareados dentro de sujeto)</h3>
+<p><a href="https://javier-2712.github.io/asesor-as/Gregorio/posthoc_bonferroni.xlsx">Descargar la tabla completa en Excel.</a></p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Resumen de 6 primeras filas de la prueba de comparaciones múltiples</caption>
+ <thead>
+  <tr>
+   <th style="text-align:center;"> .y. </th>
+   <th style="text-align:center;"> group1 </th>
+   <th style="text-align:center;"> group2 </th>
+   <th style="text-align:center;"> n1 </th>
+   <th style="text-align:center;"> n2 </th>
+   <th style="text-align:center;"> statistic </th>
+   <th style="text-align:center;"> df </th>
+   <th style="text-align:center;"> p </th>
+   <th style="text-align:center;"> p.adj </th>
+   <th style="text-align:center;"> p.adj.signif </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;"> valor </td>
+   <td style="text-align:center;"> p1 </td>
+   <td style="text-align:center;"> p10 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 10.293295 </td>
+   <td style="text-align:center;"> 199 </td>
+   <td style="text-align:center;"> 0.0e+00 </td>
+   <td style="text-align:center;"> 0.00e+00 </td>
+   <td style="text-align:center;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> valor </td>
+   <td style="text-align:center;"> p1 </td>
+   <td style="text-align:center;"> p11 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 5.886816 </td>
+   <td style="text-align:center;"> 199 </td>
+   <td style="text-align:center;"> 0.0e+00 </td>
+   <td style="text-align:center;"> 1.10e-06 </td>
+   <td style="text-align:center;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> valor </td>
+   <td style="text-align:center;"> p1 </td>
+   <td style="text-align:center;"> p12 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 10.725825 </td>
+   <td style="text-align:center;"> 199 </td>
+   <td style="text-align:center;"> 0.0e+00 </td>
+   <td style="text-align:center;"> 0.00e+00 </td>
+   <td style="text-align:center;"> **** </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> valor </td>
+   <td style="text-align:center;"> p1 </td>
+   <td style="text-align:center;"> p2 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> -2.555313 </td>
+   <td style="text-align:center;"> 199 </td>
+   <td style="text-align:center;"> 1.1e-02 </td>
+   <td style="text-align:center;"> 7.52e-01 </td>
+   <td style="text-align:center;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> valor </td>
+   <td style="text-align:center;"> p1 </td>
+   <td style="text-align:center;"> p3 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> -0.554593 </td>
+   <td style="text-align:center;"> 199 </td>
+   <td style="text-align:center;"> 5.8e-01 </td>
+   <td style="text-align:center;"> 1.00e+00 </td>
+   <td style="text-align:center;"> ns </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> valor </td>
+   <td style="text-align:center;"> p1 </td>
+   <td style="text-align:center;"> p4 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 5.071769 </td>
+   <td style="text-align:center;"> 199 </td>
+   <td style="text-align:center;"> 9.0e-07 </td>
+   <td style="text-align:center;"> 5.94e-05 </td>
+   <td style="text-align:center;"> **** </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Interpretación (plantilla):</strong> Si <code>p</code> para <code>indicador</code> es <strong>&lt; 0.05</strong>, se concluye que <strong>existen diferencias</strong> entre las medias de al menos dos indicadores. Si <code>mauchly_p</code> &lt; 0.05 (esfericidad violada), se prefiere reportar el valor <code>p</code> con corrección <strong>GG</strong> como se verá más adelante y el tamaño de efecto <code>eta2[partial]</code> (grande ~ 0.14).</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="potencia-estadística-tamaño-muestral" class="level2">
+<h2 class="anchored" data-anchor-id="potencia-estadística-tamaño-muestral">4) Potencia estadística (tamaño muestral)</h2>
+<p>Para medidas repetidas de 1 factor, la potencia depende del <strong>tamaño del efecto (Cohen f)</strong>, el <strong>número de sujetos (n)</strong>, el <strong>número de niveles (k = 12)</strong>, la <strong>correlación media entre medidas</strong> y la <strong>esfericidad</strong>. Se usa:</p>
+<ul>
+<li>Estimación de <strong>f</strong> a partir de <code>eta2[partial]</code>:<br>
+<span class="math inline">\(f = \sqrt{\eta^2_p / (1 - \eta^2_p)}\)</span>.</li>
+<li><strong>Correlación promedio</strong> entre P1–P12 (informativa).</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Parámetros para potencia (estimados de los datos)</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> n_subj </th>
+   <th style="text-align:right;"> k_levels </th>
+   <th style="text-align:right;"> eta_p2 </th>
+   <th style="text-align:right;"> f </th>
+   <th style="text-align:right;"> r_promedio </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 200 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 0.212 </td>
+   <td style="text-align:right;"> 0.5187 </td>
+   <td style="text-align:right;"> 0.3442 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+<div class="cell-output-display">
+
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Potencia aproximada</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> df_num </th>
+   <th style="text-align:right;"> df_den </th>
+   <th style="text-align:right;"> potencia_aprox </th>
+   <th style="text-align:right;"> n_requerido_80 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 2189 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 64 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><strong>Tabla 1: Parámetros para potencia.</strong> Con <strong>n = 200</strong> y <strong>k = 12</strong> niveles dentro de sujeto, el <strong>tamaño de efecto</strong> observado es <strong>η²ₚ = 0.212</strong> (grande; umbrales típicos: 0.01/0.06/0.14) y su equivalente <strong>Cohen’s f ≈ 0.519</strong>. La <strong>correlación promedio</strong> entre mediciones (<strong>r ≈ 0.34</strong>) indica dependencia moderada dentro de sujeto, lo que suele <strong>mejorar la eficiencia</strong> del ANOVA-RM (reduce error residual). En conjunto, estos parámetros anticipan <strong>diferencias claras</strong> entre indicadores y <strong>alta potencia</strong> para detectarlas.</p>
+<p><strong>Tabla 2: Potencia aproximada (asumiendo esfericidad).</strong> Con <strong>df_num = 11</strong> y <strong>df_den = 2189</strong>, la <strong>potencia ≈ 1.00</strong> (prácticamente 100%) y el <strong>n requerido para 80%</strong> de potencia es <strong>≈ 64</strong> sujetos; es decir, esta muestra de <strong>200</strong> estudiantes está <strong>muy por encima</strong> de lo necesario bajo este supuesto.</p>
+<p><strong>Nota</strong>: si la <strong>esfericidad se viola</strong> (ε &lt; 1), los df efectivos bajan y el cálculo anterior es <strong>optimista</strong>; aun así, con el <strong>tamaño de efecto grande</strong> observado y <strong>n = 200</strong>, la potencia seguiría siendo <strong>muy alta</strong> y las conclusiones <strong>robustas</strong>.</p>
+<hr>
+</section>
+<section id="conclusiones-resumen-ejecutivo" class="level2">
+<h2 class="anchored" data-anchor-id="conclusiones-resumen-ejecutivo">5) Conclusiones (resumen ejecutivo)</h2>
+<ul>
+<li><p><strong>Objetivo cumplido.</strong> Con <strong>200 estudiantes</strong> y <strong>12 indicadores (P1–P12)</strong> medidos en los mismos sujetos, aplicamos <strong>estadística descriptiva</strong> (medias, IC95%, mediana, IQR) para entender <strong>tendencias y dispersión</strong>, y <strong>ANOVA de medidas repetidas</strong> para <strong>probar diferencias</strong> entre indicadores.</p></li>
+<li><p><strong>Lo que dicen los descriptivos.</strong> Las <strong>medias con IC95%</strong> y los <strong>boxplots</strong> muestran <strong>heterogeneidad real</strong> entre indicadores: algunos se concentran por <strong>encima del promedio global</strong>, otros por <strong>debajo</strong>, con <strong>variabilidad comparable</strong> (IQR) y algunos <strong>atípicos</strong> esperables en escalas tipo Likert.</p></li>
+<li><p><strong>Prueba de diferencias (ANOVA-RM).</strong> El contraste dentro de sujeto es <strong>significativo</strong>:<br>
+<strong>ANOVA-RM corregido (GG)</strong> → <em>F</em>(8.09, 1609.26) = <strong>53.56</strong>, <em>p</em> &lt; 0.001, <strong>η²ₚ = 0.212</strong> (efecto <strong>grande</strong>).<br>
+Se <strong>violó la esfericidad</strong>, por eso reportamos el resultado <strong>con corrección GG</strong> (prudente); HF es similar y puede añadirse como referencia.</p></li>
+<li><p><strong>Qué significa para los 12 indicadores.</strong> Hay <strong>diferencias reales entre las medias</strong>. Las figuras sugieren un <strong>bloque alto</strong> (p.ej., P7, P2, P8) versus un <strong>bloque bajo</strong> (p.ej., P10, P5, P12); la <strong>confirmación exacta</strong> de <strong>qué pares</strong> difieren proviene de las <strong>comparaciones pareadas</strong> con <strong>Bonferroni</strong> (tabla <em>post-hoc</em>).</p></li>
+<li><p><strong>Magnitud del efecto.</strong> <strong>η²ₚ ≈ 0.21</strong> indica que una <strong>porción sustantiva</strong> de la variación de las puntuaciones se explica por el <strong>indicador</strong> (no solo por ruido de medición). Esto respalda <strong>diferencias con sentido práctico</strong>, además de ser estadísticamente significativas.</p></li>
+<li><p><strong>Potencia y suficiencia muestral.</strong> Con el <strong>efecto observado (f ≈ 0.52)</strong> y <strong>n = 200</strong>, la <strong>potencia ≈ 1.00</strong>; el <strong>n mínimo</strong> para 80% de potencia (bajo esfericidad) es <strong>≈ 64</strong>. Tu muestra es <strong>más que suficiente</strong> para detectar las diferencias planteadas.</p></li>
+<li><p>Finalmente, los descriptivos y la inferencia con el ANOVA-RM convergen: los <strong>12 indicadores no son equivalentes en su nivel medio</strong> en esta cohorte; las <strong>diferencias</strong> son <strong>estadística y prácticamente relevantes</strong>, y el <strong>tamaño muestral</strong> garantiza <strong>conclusiones robustas</strong> para este objetivo.</p></li>
+<li><p><strong>Cómo reportar estos resultados.</strong></p>
+<ol type="1">
+<li><p>Citar el <strong>ANOVA-RM (GG)</strong> con F, df, <em>p</em>, <strong>η²ₚ</strong> y <strong>ε_GG</strong>.</p></li>
+<li><p>Mostrar las <strong>medias con IC95%</strong> y <strong>boxplots</strong> por indicador.</p></li>
+<li><p>Incluir la <strong>tabla completa de post-hoc (Bonferroni)</strong> y destaca los <strong>pares</strong> con diferencias.</p></li>
+<li><p>Añadir una <strong>nota metodológica</strong> breve sobre <strong>esfericidad</strong> y por qué se usa <strong>GG</strong>.</p></li>
+</ol></li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
